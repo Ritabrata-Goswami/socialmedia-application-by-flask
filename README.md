@@ -1,2 +1,2 @@
 # ritabrata-python
-This is small social media application that is build by Flask, AJAX and SQL-server. 
+This is small social media application that is build by Flask and SQL-server at the backed and HTML, CSS, W3.css, Javascript, AJAX on UI. 
