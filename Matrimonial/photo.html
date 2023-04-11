@@ -1,0 +1,602 @@
+<html>
+    <head>
+        <title>Matrimonial</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Matrimonial Webpage">
+        <meta name="keywords" content="Profile, Find partner">
+        <meta name = 'robots' content = 'index, follow'>
+        <meta property = 'og:title' content = 'Matrimony'/>
+        <meta property = 'og:description' content = "This is Matrimonial web application. Where people come to find their life partner. Matrimonial also provide best service with free of cost."/>
+        <meta property = 'og:image' content = '-----'/>
+        <meta property = 'og:url' content = '-----'/>  
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-flat.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-metro.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <style type="text/css">
+            html {
+                scroll-behavior:smooth;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            .bar{
+                background-image: linear-gradient(to right, red, blue);
+                position: sticky;
+                top: 0;
+                z-index:2;
+            }
+            .image-bar{
+                box-shadow: 0px 3px 5px #777777;
+                border-radius: 3px;
+                font-size: 17px;
+                margin-top: 5px;
+            }
+            #img-container{
+                margin:auto;
+                margin-top:50px;
+                /* border: 1px solid #000000; */
+                width:850px;
+                /* margin-bottom:10px; */
+            }
+            .photo-col{padding:0px 3px;}
+            .photo{
+                width:150px;
+                height:150px;
+                border-radius:3px;
+                float:left;
+                margin-left: 10px;
+                margin-top:1px;
+                margin-bottom:13px;
+                box-shadow:0px 5px 3px #777777;
+            }
+            .photo:hover{
+                /* width:152px;
+                height:152px; */
+                transition:0.2s;
+                cursor:pointer;
+                box-shadow:0px 10px 3px #777777;
+            }
+            #upload-content{
+                width: 500px;
+                margin: auto;
+                border-radius: 5px;
+                background:#494545;
+            }
+            .display-content{
+                width: 950px;
+                margin: auto;
+                border-radius: 5px;
+                background:#494545;
+                margin-bottom:50px;
+            }
+            #status-box{height:85px;}
+            .upload-logo {
+                padding: 13px 13.5px;
+                background: #000000;
+                border-radius: 50%; 
+                width: 40px;
+                height:40px;
+        /* border: 5px solid #00cc44; */
+                margin: auto;
+            }
+            .file-upload-container,#display-container,#delete-container,#delete-success{
+                display: none; 
+                position: fixed; 
+                z-index: 3; 
+                left: 0;
+                top: 0;
+                width: 100%; 
+                height: 100%; 
+                overflow: auto; 
+                background-color: rgba(0,0,0,0.7);
+                padding-top: 50px;
+            }
+            .upload-success-close, .display-close{
+                font-size: 25px;
+                font-weight: bold;
+                float:right;
+                color:#f1f1f1
+            }
+            .upload-success-close:hover, .display-close:hover{
+                cursor:pointer;
+                color: #f12718;
+                transition: 0.3s;
+            }
+            #photo-btn{
+                font-size:12px; 
+                background:#928d8d; 
+                padding:5px 5px; 
+                cursor:pointer; 
+                border-radius:2px;
+                color:white;
+            }
+            #video-btn{
+                font-size:12px; 
+                background:#928d8d; 
+                padding:5px 5px; 
+                cursor:pointer; 
+                border-radius:2px;
+                color:white;
+            }
+            #photo-btn:hover{
+                transition:0.3s;
+                background:#4d4747;
+            }
+            #video-btn:hover{
+                transition:0.3s;
+                background:#4d4747;
+            }
+            #edit-btn{
+                font-size:12px; 
+                background:#928d8d; 
+                padding:5px 5px; 
+                cursor:pointer; 
+                border-radius:2px;
+                color:white;
+            }
+            #edit-btn:hover{
+                transition:0.3s;
+                background:#4d4747;
+            }
+            #delete-btn{
+                font-size:12px; 
+                background:#928d8d; 
+                padding:5px 5px; 
+                cursor:pointer; 
+                border-radius:2px;
+                color:white;
+            }
+            #delete-btn:hover{
+                transition:0.3s;
+                background:#4d4747;
+            }
+            #edit-element{display:none;}
+            #save-edit{
+                font-size:14px;
+                border-radius:2px;
+                padding:5px 5px; 
+                cursor:pointer; 
+                background:#359b35;
+            }
+            #save-edit:hover{
+                transition:0.3s;
+                background: #2e612e;
+            }
+            #cancel-edit{
+                font-size:14px;
+                border-radius:2px;
+                padding:5px 5px; 
+                cursor:pointer; 
+                background:#d43636;
+            }
+            #cancel-edit:hover{
+                transition:0.3s;
+                background: #8f3131;
+            }
+            .delete-content{
+                width: 500px;
+                margin: auto;
+                border-radius: 5px;
+            }
+            .yes{
+                background:#1f6e1f;
+                padding:5px 35px;
+                cursor:pointer;
+                border-radius: 2px;
+            }
+            .yes:hover{
+                background:#58da58;
+                color:#000000;
+            }
+            .no{
+                background:#a31b1b;
+                padding:5px 35px;
+                cursor:pointer;
+                border-radius: 2px;
+            }
+            .no:hover{
+                background:#ec0e0e;
+                color:#000000;
+            }
+            #putImgContainer, #putImgContent, #putImgtime{display:none;}
+            #emj-container{
+                display:none;
+                width:130px;
+                padding:5px 3px;
+                background:#1a1a1a;
+                /* box-shadow: 0px 5px 3px #777777; */
+                position:absolute;
+                z-index:2;
+                border-radius:2px;
+            }
+            .to-top {
+                display: none; 
+                position: fixed;
+                z-index: 5;
+                transition: 1s;
+                top: 80%;
+                right: 3%;
+            }
+        </style>
+    </head>
+    <body onload="">
+        <div class="w3-container bar">
+            <div class="w3-right">
+                <a href="/{{send_session_url}}/search"><i class="fa fa-group" style="font-size:24px; color:white; margin-right:35px;" title="search partner"></i></a>
+                <a href="/{{send_session_url}}"><i class="fa fa-user-circle-o" style="font-size:24px; color:white; margin-top:5px; margin-bottom:5px; margin-right:5px;" title="your profile"></i></a>
+                <a href="/logout"><i class="fa fa-power-off" style="color:red; font-size:20px; margin-left:25px;" title="logout"></i></a>
+            </div>
+        </div>
+        <div class="w3-padding-small">
+            <a href="/{{url}}/photo" style="text-decoration:none;"><div class="w3-bar w3-metro-magenta w3-center w3-padding image-bar">See All Photos/Videos of {{send_name}}</div></a>
+        </div>
+        <div class="w3-margin-top w3-margin-right w3-margin-bottom">
+            <div id="open-upload-block" class="w3-button w3-flat-wet-asphalt w3-right w3-hover-black" style="font-size:12px; color:#1a1aff;"><i class="fa fa-upload"></i>  Photo/Video</div>
+        </div>
+        <div id="img-container">
+            <div id="putImgContainer">
+            </div>
+        
+            {% if(all_photos | length > 0) %}
+                {% for photos in all_photos %}
+                    {% if (photos.file_name != 'NULL') %}
+
+                    <div class="photo-col">
+                        <img src="/Matrimonial/photo/serve_photos/{{photos.file_name}}" alt="Uploaded_Photo" title="photo of {{photos.user_name}}" class="photo" onclick="findPhotoAll({{send_photo_jsonify}}, '{{photos.file_name}}')"/>
+                    </div>
+
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+
+            <div class="photo-col">
+                <div class="w3-bar w3-padding w3-center" style="color:#d9d9d9; background:#8c8c8c; box-shadow:0px 3px 3px #777777; border-radius:2px;">No Photo or Video Available!</div>
+            </div>
+
+            {% endif %}
+        </div>
+
+        <button class = 'w3-button w3-btn w3-green w3-hover-blue to-top' id = 'top' onclick="topFunction()"><i class = 'fa fa-arrow-up'></i> Top</button>
+
+        <div class="w3-margin-top w3-bar w3-black w3-center"></div>
+
+        <div id="file-upload-container" class="w3-margin-top file-upload-container">
+            <div class="w3-container w3-padding" id="upload-content">
+                <span class="upload-success-close w3-margin-right" title="Close" id="close-photo-upload-success-btn">&times;</span>
+                <h5 style="color:white;">Upload Photo/Video</h5>
+                <div>
+                    <span class="upload-option-btn" id="photo-btn" onclick="this.style.background='yellow'";>photo</span>
+                    <span class="upload-option-btn" id="video-btn" onclick="this.style.background='yellow'";>video</span>
+                </div>
+                <div class="" style="margin-top:35px;">
+                    <textarea class="w3-input w3-border w3-padding" id="status-box" placeholder="write your status..." style="font-size:13px;"></textarea>
+                </div>
+                <div id="emj-container">
+                    <div id="cut-emoji" class="w3-right w3-text-white" style="cursor:pointer;">&times;</div>
+                    <div style="margin-top:23px;">
+                        <span id="emoji_1" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(1)">&#128515;</span>
+                        <span id="emoji_2" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(2)">&#128518;</span>
+                        <span id="emoji_3" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(3)">&#128521;</span>
+                        <span id="emoji_4" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(4)">&#128522;</span>
+                        <span id="emoji_5" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(5)">&#128525;</span>
+                        <span id="emoji_6" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(6)">&#128526;</span>
+                        <span id="emoji_7" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(7)">&#128529;</span>
+                        <span id="emoji_8" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(8)">&#128552;</span>
+                        <span id="emoji_9" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(9)">&#128532;</span>
+                        <span id="emoji_10" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(10)">&#128546;</span>
+                        <span id="emoji_11" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(11)">&#128557;</span>
+                        <span id="emoji_12" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(12)">&#128152;</span>
+                        <span id="emoji_13" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(13)">&#128150;</span>
+                        <span id="emoji_14" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(14)">&#128145;</span>
+                        <span id="emoji_15" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(15)">&#128146;</span>
+                        <span id="emoji_16" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(16)">&#128141;</span>
+                    </div>
+                </div>
+                <i id="react" class='fa fa-smile-o w3-text-yellow' style='cursor:pointer; font-size:20px; margin-top:5px;'></i>
+                <div class = 'upload-logo w3-margin-top'>
+                    <label for="upload-profile-photo" class = ''>
+                        <i class="fa fa-upload w3-text-white" id="main-upload-icon"></i>
+                        <input type = 'file' id = 'upload-profile-photo' style = 'display:none;' onchange="loadFile(event)"/>
+                    </label>
+                </div>
+                <div class="w3-center w3-margin-top" id="icon-container">
+                    <img id="output" src="/Matrimonial/photo/web_photo/upload-user-icon.jpg" style="width:100px; height:100px;"/>	
+                </div>
+                <button id = 'profile-photo-upload-submit' class = 'w3-button w3-btn w3-green w3-hover-black' style = 'margin-left: 192px; margin-top: 50px;'>Upload</button>
+            </div>
+        </div>
+        
+        <div id="display-container">
+            <div class="w3-margin-top w3-container w3-flat-midnight-blue display-content">
+                <span class="display-close w3-margin-right" title="Close" id="close-photo-display-success-btn">&times;</span>
+                <div style="margin-top:10px;">
+                    <span class="content-option-btn" id="edit-btn" onclick="openEdit();">Edit</span>
+                    <span class="content-option-btn" id="delete-btn" onclick="deletePhoto();">Delete</span>
+                </div>
+                <div id="show-upload-time" style="font-size:11px; margin-top:20px;"></div>
+                <div style="display:flex; margin-top:10px; margin-bottom:20px; padding:5px 0px;">
+                    <div style="flex:80%; padding:0px 5px;">
+                        <img id="photo-here" alt="uploaded photo" title="Photo" style="width:100%;"/>
+                    </div>
+                    <div style="flex:20%; padding:0px 3px;" id="display-status-element">
+                        <div id="description-text" style="font-size:14px;"></div>
+                    </div>
+                    <div style="flex:20%; padding:0px 3px;" id="edit-element">
+                        <textarea id="description-edit-text" class="w3-input w3-border" style="font-size:13px; height:500px;" placeholder="Enter status..."></textarea>
+                        <input type="text" id="img-name"/>
+                        <div style="margin-top:7px; float:right;">
+                            <span class="" id="save-edit">save</span>
+                            <span class="" id="cancel-edit">cancel</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="w3-center w3-margin-bottom">
+                    <i class="fa fa-heart" style="font-size:20px; margin-top:8px; cursor:pointer; color:red;" onclick="reaction();"></i><span> 5</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="delete-container">
+            <div class="w3-container w3-flat-midnight-blue w3-margin-top w3-padding delete-content">
+                <h4 class="w3-center">Confirm Delete?</h4>
+                <div class="w3-center" style="margin-top:35px;">
+                    <span class="yes" id="yes">YES</span>
+                    <span class="no" id="no">NO</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div id="delete-success">
+            <div class="w3-container w3-flat-midnight-blue w3-margin-top w3-padding delete-content">
+                <span class="display-close w3-margin-right" onclick="document.getElementById('delete-success').style.display='none'">&times;</span>
+                <h4 id="success-delete" class="w3-center"></h4>
+            </div>
+        </div> -->
+
+        <script>
+            var clickReact = (getEmoji) => {document.getElementById('status-box').value += document.getElementById('emoji_'+`${getEmoji}`).innerHTML;}
+            var uploadContainer = document.getElementById('file-upload-container');
+            var closeDisplay = document.getElementById("display-container");
+            window.onclick = (event) =>{
+                if(event.target == uploadContainer)
+                {
+                    uploadContainer.style.display = 'none';
+                }
+                if(event.target == closeDisplay)
+                {
+                    closeDisplay.style.display = 'none';
+                }
+            }
+
+            window.onscroll = () => {
+                if (document.body.scrollTop > 900 || document.documentElement.scrollTop > 900) {
+                    document.getElementById('top').style.display = "block";
+                } else {
+                    document.getElementById('top').style.display = "none";
+                }
+            }
+
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+
+            $(document).ready(()=>{
+                $('#open-upload-block').click(() => {$('#file-upload-container').fadeIn(200);}); 
+                $('#close-photo-upload-success-btn').click(()=>{$('#file-upload-container').fadeOut(200);});
+                $('#video-btn').click(()=>{document.getElementById('icon-container').style.display = 'none';});
+                $('#photo-btn').click(()=>{document.getElementById('icon-container').style.display = 'block';});
+                $('.upload-option-btn').on('click',function(){
+                    $('.upload-option-btn').css({'background':'', 'color':''}); 
+                    $(this).css({'background':'#1f1f1f', 'color':'#ffff99'});
+                });
+                $('.content-option-btn').on('click',function(){
+                    $('.content-option-btn').css({'background':'', 'color':''}); 
+                    $(this).css({'background':'#1f1f1f', 'color':'#ffff99'});
+                });
+                
+                $('#close-photo-display-success-btn').click(()=>{$('#display-container').fadeOut(200);});
+                $('#no').click(()=>{$('#delete-container').fadeOut(100);});
+                $('#react').click(()=>{$('#emj-container').fadeIn(200);});
+                $('#cut-emoji').click(()=>{$('#emj-container').fadeOut(200);});
+            });
+            
+            function openEdit()
+            {
+                document.getElementById("display-status-element").style.display = 'none';
+                document.getElementById('edit-element').style.display = 'block';
+            }
+
+            function deletePhoto()
+            {
+                document.getElementById("delete-container").style.display = 'block';
+            }
+
+            document.getElementById('cancel-edit').addEventListener('click',()=>{
+                document.getElementById("display-status-element").style.display = 'block';
+                document.getElementById('edit-element').style.display = 'none';
+            });
+
+            document.getElementById('save-edit').addEventListener('click',()=>{
+                var getStatus = document.getElementById('description-edit-text').value;
+                var getStatusId = document.getElementById('img-name').value;
+                console.log(getStatus);
+                console.log(getStatusId);
+
+                var sendStatus = [{"status":getStatus},{'id':getStatusId}];
+                $.ajax({
+                    method:'POST',
+                    url:'/update-status',
+                    data:JSON.stringify(sendStatus),
+                    contentType:'application/json',
+                    dataType:'json',
+                    success:(response)=>{
+                        console.log(response);
+                        for(var i = 0; i < response.length; i++)
+                        {
+                            console.log(response[i].response);
+                            document.getElementById("display-status-element").style.display = 'block';
+                            document.getElementById('edit-element').style.display = 'none';
+                            document.getElementById('description-text').innerHTML = `${response[i].description}`;
+                            window.location.href = `/${response[i].user_account}/photo`;
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.log('Error code:- '+jqXHR.status);
+                        console.log('Error:- '+jqXHR.responseText);
+                    }
+                });
+            });
+
+            function findPhotoAll(getPhoto, photoName) 
+            {
+                var allProfilePhotos = getPhoto;
+                for(var i = 0; i < allProfilePhotos.length; i++) 
+                {
+                    if(allProfilePhotos[i].name == photoName) 
+                    {
+                        console.log(allProfilePhotos[i].name);
+                        console.log(allProfilePhotos[i].obj_description);
+                        console.log(allProfilePhotos[i].upload_time);
+                        document.getElementById('photo-here').src = `/Matrimonial/photo/serve_photos/${photoName}`;
+                        document.getElementById('description-text').innerHTML = `${allProfilePhotos[i].obj_description}`;
+                        document.getElementById('description-edit-text').value = `${allProfilePhotos[i].obj_description}`;
+                        document.getElementById('show-upload-time').innerHTML = `uploaded on ${allProfilePhotos[i].upload_time.split(" ")[0]} at - ${allProfilePhotos[i].upload_time.split(" ")[1].split(":")[0]}:${allProfilePhotos[i].upload_time.split(" ")[1].split(":")[1]}`;
+                        document.getElementById('display-container').style.display = 'block';
+                        document.getElementById('img-name').style.display = 'none';
+                        document.getElementById('img-name').value = `${photoName}`;
+                    }
+                }
+            }
+
+            // document.getElementById('get-photo-instant').addEventListener('click',()=>{
+            //     var image = document.getElementById('get-photo-instant').src;
+            //     var content = document.getElementById('putImgContent').innerHTML
+            //     var t = document.getElementById('putImgtime').innerHTML;
+            //     console.log('The image is:- '+image);
+            //     console.log('content:- '+content);
+            //     console.log('time:- '+t);
+            //     document.getElementById('photo-here').src = `${image}`;
+            //     document.getElementById('description-text').innerHTML = `${content}`;
+            //     document.getElementById('display-container').style.display = 'block';
+            // });
+
+            // function reaction(event)
+            // {}
+
+
+            document.getElementById('yes').addEventListener('click', (event)=>{
+                var getStatusId = document.getElementById('img-name').value;
+
+                var sendDeleteId = [{'id':getStatusId}];
+                console.log(JSON.stringify(sendDeleteId));
+                $.ajax({
+                    method:'POST',
+                    url:'/delete-status',
+                    data:JSON.stringify(sendDeleteId),
+                    contentType:'application/json',
+                    dataType:'json',
+                    success:(response)=>{
+                        console.log(response);
+                        for(var i = 0; i < response.length; i++)
+                        {
+                            console.log(response[i].response);
+                            // document.getElementById('delete-container').style.display='none';
+                            // document.getElementById('delete-success').style.display='block';
+                            // document.getElementById('success-delete').innerHTML = response[i].response;
+                            window.location.href = `/${response[i].user_account}/photo`;
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.log('Error code:- '+jqXHR.status);
+                        console.log('Error:- '+jqXHR.responseText);
+                    }
+                });
+            });
+
+
+            document.getElementById('profile-photo-upload-submit').addEventListener('click',()=>{
+                var uploadFile = document.getElementById('upload-profile-photo').files[0];
+                var description = document.getElementById('status-box').value;
+
+                var formdata = new FormData();
+                formdata.append('file',uploadFile);
+                formdata.append('description',description);
+
+                if(uploadFile === undefined)
+                {
+                    console.log('No File to Upload!');
+                    return false;
+                }
+                else
+                {
+                    $.ajax({
+                        method:'POST',
+                        url:'/upload',
+                        data:formdata,
+                        contentType: false,
+                        processData: false,
+                        success:(result)=>{
+                            console.log(result);
+                            for(var i = 0; i < result.length; i++)
+                            {
+                                console.log(result[i].response);
+                                document.getElementById('putImgContainer').style.display = 'block';
+                                document.getElementById('putImgContainer').innerHTML += `<img src="/Matrimonial/photo/serve_photos/${result[i].photo_or_video}" alt="Uploaded_Photo" title="photo of ${result[i].name}" class="photo" onclick="findPhotoInfoAll('${result[i].photo_or_video}')"/>`;
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown)
+                        {
+                            console.log('Error code:- '+jqXHR.status);
+                            console.log('Error:- '+jqXHR.responseText);
+                        }
+                    });
+                    return true;
+                }
+            });
+
+            var findPhotoInfoAll = (getId) => {
+                var sendResponse = [{"sendId":getId}];
+                console.log(JSON.stringify(sendResponse));
+                
+                $.ajax({
+                    method:'POST',
+                    url:'/fetch-photo-info',
+                    data:JSON.stringify(sendResponse),
+                    contentType:'application/json',
+                    dataType:'json',
+                    success:(result)=>{
+                        console.log(result);
+                        for(var i = 0; i < result.length; i++)
+                        {
+                            document.getElementById('photo-here').src = `/Matrimonial/photo/serve_photos/${result[i].img_or_vid_name}`;
+                            document.getElementById('description-text').innerHTML = `${result[i].content}`;
+                            document.getElementById('description-edit-text').value = `${result[i].content}`;
+                            document.getElementById('show-upload-time').innerHTML = `uploaded on ${result[i].upload_time.split(" ")[0]} at - ${result[i].upload_time.split(" ")[1].split(":")[0]}:${result[i].upload_time.split(" ")[1].split(":")[1]}`;
+                            document.getElementById('display-container').style.display = 'block';
+                            document.getElementById('img-name').style.display = 'none';
+                            document.getElementById('img-name').value = `${result[i].img_or_vid_name}`;
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.log('Error code:- '+jqXHR.status);
+                        console.log('Error:- '+jqXHR.responseText);
+                    }
+                });
+            }
+
+            var loadFile = function(event) {
+                var image = document.getElementById('output');
+                image.src = URL.createObjectURL(event.target.files[0]);
+            };
+        </script>
+    </body>
+</html>

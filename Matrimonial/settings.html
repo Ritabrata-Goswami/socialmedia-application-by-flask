@@ -1,0 +1,208 @@
+<html>
+    <head>
+        <title>Matrimonial</title>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-flat.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-metro.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <style type="text/css">
+            * {
+                box-sizing: border-box;
+            }
+            .bar{
+                background-image: linear-gradient(to right, red, blue);
+                position: sticky;
+                top: 0;
+                z-index:2;
+            }
+            #delete-all-post{
+                cursor:pointer;
+                background:#f3501f;
+                padding:7px 5px;
+                font-size:13px;
+                border-radius:2px;
+                color:aliceblue;
+                width:150px;
+                margin:auto;
+                text-align:center;
+            }
+            #delete-all-post:hover{
+                transition: 0.4s;
+                background: #fa0505;
+                box-shadow:0px 5px 3px #777777;
+            }
+            .default-remove-all-post{
+                cursor:pointer;
+                background:#000000;
+                padding:7px 5px;
+                font-size:13px;
+                border-radius:2px;
+                color:aliceblue;
+                width:150px;
+                margin:auto;
+                text-align:center;
+            }
+            /* .demo-class{display:none;} */
+            .remove-all-popup, .message-display-block{
+                display: none; 
+                position: fixed; 
+                z-index: 2; 
+                left: 0;
+                top: 0;
+                width: 100%; 
+                height: 100%; 
+                overflow: auto; 
+                background-color: rgba(0,0,0,0.7);
+                padding-top: 50px;
+            }
+            #msg-dis-block-element{
+                width:400px;
+                margin:auto;
+                margin-top:50px;
+                border-radius:2px;
+            }
+            #remove-all-element{
+                width:400px;
+                margin:auto;
+                margin-top:50px;
+                border-radius:2px;
+            }
+            #close-remove-all,.success-msg-close{
+                font-size:25px;
+                cursor:pointer;
+                float:right;
+                font-weight: bold;
+            }
+            #close-remove-all:hover,.success-msg-close:hover{
+                transition: 0.3s;
+                color:#f3501f;
+            }
+            .set-background-warning{
+                color:#fa2a05;
+                font-weight:bold;
+                /* padding: 2px 0px;
+                border-radius: 2px; */
+            }
+            #warning-msg{
+                font-size:11px;
+                color:#f3501f;
+                display:none;
+                text-align:center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="w3-container bar">
+            <div class="w3-right">
+                <a href="/{{send_session_url}}/search"><i class="fa fa-group" style="font-size:24px; color:white; margin-right:35px;" title="search partner"></i></a>
+                <a href="/{{send_session_url}}"><i class="fa fa-user-circle-o" style="font-size:24px; color:white; margin-top:5px; margin-bottom:5px; margin-right:5px;" title="your profile"></i></a>
+                <a href="/logout"><i class="fa fa-power-off" style="color:red; font-size:20px; margin-left:25px;" title="logout"></i></a>
+            </div>
+        </div>
+        <h3 class="w3-center" style="margin-top:30px;"><i class="fa fa-gear"></i> settings</h3>
+        <div class="w3-margin-top" id="remove-post-btn-container">
+            {% if(send_file_status == 'exists') %}
+
+                <div id="delete-all-post"><i class="fa fa-trash-o"></i> Remove all post</div>
+
+            {% endif %}
+            {% if(send_file_status == 'NULL') %}
+
+                <div id="default-remove-all-post" class="default-remove-all-post"><i class="fa fa-trash-o"></i> Remove all post</div>
+
+            {% endif %}
+        </div>
+
+        <div class="remove-all-popup" id="remove-all-block">
+            <div class="w3-container w3-flat-midnight-blue w3-padding" id="remove-all-element">
+                <span class="success-close w3-margin-right" title="Close Modal" id="close-remove-all">&times;</span>
+                <div class="" style="margin-top:40px;">
+                    <h4 class="w3-center">Are you sure, remove all post?</h4>
+                    <p class="w3-text-red w3-center" style="font-size:11px;">Once deleted all, you will not be able to get back your post again!</p>
+                    <div class="w3-center" style="margin-top:35px;" id="set-background">
+                        <p id="warning-msg">please tik the below box!</p>
+                        <input type="checkbox" id="confirm-box"/><span style="font-size:12px;" id="check-box"> Yes delete all my post</span>
+                    </div>
+                    <div class="w3-center" style="margin-top:35px;">
+                        <button class="w3-button w3-red w3-hover-yellow" id="confirm-delete" style="border-radius:2px;" onclick="return removeAllPost({{user_id}})"><i class="fa fa-trash-o"></i> Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="message-display-block" id="message-display-block">
+            <div class="w3-container w3-flat-midnight-blue w3-padding" id="msg-dis-block-element">
+                <span class="success-msg-close w3-margin-right" title="Close Modal" id="close-message-block">&times;</span>
+                <div class="w3-center" style="margin-top:40px;" id="see-message"></div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(()=>{
+                $('#delete-all-post').click(()=>{$('#remove-all-block').fadeIn(300)});
+                $('#close-remove-all').click(()=>{$('#remove-all-block').fadeOut(200)});
+                $('#close-message-block').click(()=>{$('#message-display-block').fadeOut(200)});
+                $('#confirm-delete').click(()=>{ 
+                    if($("#confirm-box").prop('checked') == false)
+                    { 
+                        $("#check-box").addClass("set-background-warning");
+                        $("#warning-msg").fadeIn(350);
+                        setTimeout(()=>{$("#warning-msg").fadeOut(500)},4000);
+                    }
+                });
+                $('#confirm-box').click(()=>{
+                    if($("#confirm-box").prop('checked') == true)
+                    {
+                        $("#check-box").removeClass("set-background-warning");
+                    }
+                });
+            });
+
+            function removeAllPost(id)
+            {
+                if(document.getElementById('confirm-box').checked == false)
+                {
+                    console.log('tik the ckeckbox!');
+                    return false;
+                }
+                else
+                {
+                    sendDeletePost = [{"passId":id}];
+                    $.ajax({
+                        method:'POST',
+                        url:'/delete-all-post',
+                        data:JSON.stringify(sendDeletePost),
+                        contentType:'application/json',
+                        dataType:'json',
+                        success:(result)=>{
+                            console.log(result);
+                            for(var i = 0; i < result.length; i++)
+                            {
+                                console.log(result[i].message);
+                                document.getElementById('message-display-block').style.display = 'block';
+                                document.getElementById('see-message').innerHTML = '<span style="margin:auto;"><i class="fa fa-check-circle" style="font-size:24px; color:#00b300;"></i></span>' + '<br/>' + '<span style="font-size:15px; color:#00ff00; text-align:center;">' + result[i].message + '</span>';
+                                document.getElementById('delete-all-post').style.display = 'none';
+                                document.getElementById('confirm-delete').style.display = 'none';
+                                document.getElementById('remove-post-btn-container').innerHTML = '<div id="default-remove-all-post" class="default-remove-all-post"><i class="fa fa-trash-o"></i> Remove all post</div>';
+                                setTimeout(()=>{$('#message-display-block').fadeOut(300)},10000);
+                                setTimeout(()=>{$('#remove-all-block').fadeOut(300)},10500);
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown)
+                        {
+                            console.log('Error code:- '+jqXHR.status);
+                            console.log('Error:- '+errorThrown);
+                            document.getElementById('message-display-block').style.display = 'block';
+                            document.getElementById('see-message').innerHTML = 'Error - '+jqXHR.status + ', <span style="color:#f3501f;">' + errorThrown + '!</span>'; 
+                            setTimeout(()=>{$('#message-display-block').fadeOut(300)},6000);
+                        }
+                    });
+                    return true;
+                }
+            }
+        </script>
+    </body>
+</html>

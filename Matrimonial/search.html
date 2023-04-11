@@ -1,0 +1,310 @@
+<html>
+    <head>
+        <title>Matrimonial</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Matrimonial Webpage">
+        <meta name="keywords" content="Profile, Find partner">
+        <meta name = 'robots' content = 'index, follow'>
+        <meta property = 'og:title' content = 'Matrimony'/>
+        <meta property = 'og:description' content = "This is Matrimonial web application. Where people come to find their life partner. Matrimonial also provide best service with free of cost."/>
+        <meta property = 'og:image' content = '-----'/>
+        <meta property = 'og:url' content = '-----'/>  
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-flat.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-metro.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <style type="text/css">
+            * {
+                box-sizing: border-box;
+            }
+            .bar{
+                background-image: linear-gradient(to right, red, blue);
+                position: sticky;
+                top: 0;
+            }
+            .left-container{
+                flex:30%;
+                margin-top: 3px;
+            }
+            .middle-container{
+                flex:50%;
+                margin-top: 3px;
+            }
+            .status{
+                box-shadow: 0px 3px 5px #777777;
+                border-radius: 3px;
+            }
+            .right-container{
+                flex:70%;
+                margin-top: 3px;
+            }
+            .messages{
+                box-shadow: 0px 3px 5px #777777;
+                border-radius: 3px;
+            }
+            .profile-details{
+                /* width:400px; */
+                box-shadow: 0px 3px 5px #777777;
+                border-radius: 3px;
+                margin-top: 5px;
+                margin-left: 5px;
+            }
+            .profile-photo-details{
+                /* width:400px; */
+                margin-top: 10px;
+                margin-left: 5px;
+            }
+            .image-bar{
+                box-shadow: 0px 3px 5px #777777;
+                border-radius: 3px;
+                font-size: 17px;
+            }
+            .photo-container{
+                margin-top: 5px;
+                margin-left: 5px;
+                /* width:400px; */
+            }
+            .column {
+                /* flex: 25%; */
+                float: left;
+                width: 50%;
+                padding: 1px 3px;
+            }
+            .img-class {
+                width: 100%;
+                opacity: 0.8; 
+                cursor: pointer; 
+            }
+            .img-class:hover {opacity:1;}
+            .status-enter{height:100px;}
+            .status-display{
+                margin-top:7px;
+                box-shadow: 0px 3px 5px #777777;
+                border-radius:3px;
+            }
+            .status-display-container{margin-top:15px;}
+            .msg-display{border-radius:3px;}
+            .user{margin-bottom:22px;}
+            /* .rply-btn{margin-bottom:20px;} */
+            .search-photo{
+                width:70px; 
+                height:70px; 
+                border-radius:50%;
+            }
+            .search-conditions{
+                width:100%;
+                border-radius: 3px;
+                box-shadow: 0px 3px 5px #777777;
+            }
+            .dropdown-opt{margin-top:10px;}
+            .filter-container{margin-top:30px;}
+            .search-res-tab{
+                border-radius: 3px;
+                box-shadow: 0px 3px 5px #777777;
+                width:100%;
+            }
+            #new-search-container{display:none;}
+            .search-manual{
+                /* width:100%; */
+                display: flex;
+                border-radius: 3px;
+                box-shadow: 0px 3px 5px #777777;
+            }
+            #search-manual {flex:90%;}
+            #search-submit-btn {flex:10%;}
+            #no-search-container{display:none;}
+            #tab-search-container{display:none;}
+        </style>
+    </head>
+    <body>
+        <div class="w3-container bar">
+            <div class="w3-right">
+                <a href="/{{send_session_url}}/search"><i class="fa fa-group" style="font-size:24px; color:white; margin-right:35px;"></i></a>
+                <a href="/{{send_session_url}}"><i class="fa fa-user-circle-o" style="font-size:24px; color:white; margin-top:5px; margin-bottom:5px; margin-right:5px;"></i></a>
+                <a href="/logout"><i class="fa fa-power-off" style="color:red; font-size:20px; margin-left:25px;"></i></a>
+            </div>
+        </div>
+        <div style="display:flex;">
+            <div class="left-container w3-padding-small">
+                <div class="search-manual">
+                    <input type="text" name="enter_name" id="search-manual" class="w3-input w3-border" placeholder="Find your partner..."/>
+                    <button class="w3-button w3-flat-midnight-blue w3-hover-black" id="search-submit-btn"><i class="fa fa-search"></i></button>
+                </div>
+                <div class="search-conditions w3-padding w3-flat-midnight-blue w3-margin-top">
+                    <h2>Welcome {{row_val.name}}</h2>
+                    <h4>Filter Your Search By below conditions</h4>
+                    <div class="filter-container">
+                        <label for="country" style="font-size:12px;">Search Your Result By Country: </label>
+                        <br/>
+                        <select class="dropdown-opt" name="country" id="country">
+                            <option value="">--select--</option>
+                            <option value="india">India</option>
+                            <option value="US">USA</option>
+                            <option value="UK">UK</option>
+                            <option value="France">France</option>
+                        </select>
+                        <div class="btn-container w3-margin-top w3-center">
+                            <button class="w3-button w3-green w3-hover-black w3-padding-small" id="submit">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-container w3-padding-small">
+                <div class="w3-bar w3-metro-light-purple w3-center w3-padding messages">See Search Results</div>
+                <div class="w3-margin-top w3-padding" id="tab-search-container">
+                </div>
+                <div class="w3-margin-top w3-padding" id="new-search-container">
+                </div>
+                <div class="w3-margin-top w3-padding" id="no-search-container">
+                </div>
+                <div class="w3-margin-top w3-padding" id="search-container">
+                    {% for search_list in default_search %}
+                    
+                    <div class="w3-container w3-metro-dark-blue w3-padding w3-margin-bottom search-res-tab" id="default-search">
+                        <img src="/Matrimonial/photo/matrimonial_profile_photo/{{search_list.photo}}" title="profile-img" class="search-photo"/><span style="font-size:20px;"> {{search_list.name}}</span>
+                        <div style="font-size:13px;">From {{search_list.country}}</div>
+                        <div style="font-size:13px;">{{search_list.gender}}</div>
+                        <div style="font-size:11px; margin-top:15px; color:#ffff00">Sent Request <i class="fa fa-plus" style="color:#ffff00"></i></div>
+                        <!-- <div style="font-size:11px; margin-top:15px; color:#00ff00">Request has sent <i class="fa fa-check" style="color:#00ff00"></i></div>
+                        <div style="font-size:11px; margin-top:15px; color:#ffa2a2">Request Rejected <i class="fa fa-close" style="color:#ffa2a2"></i></div> -->
+                        <div class="w3-right"><span style="font-size:13px;">Visit profile to send request </span><a href="/{{search_list.profile_url}}"><button class="w3-button w3-green w3-hover-yellow"><i class="fa fa-eye"></i></button></a></div>
+                    </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <script>
+            document.getElementById('submit').addEventListener('click', ()=>{
+                var searchVal = document.getElementById('country').value;
+                if(searchVal == '')
+                {
+                    console.log('Please filter your search result.');
+                    return false;
+                }
+                else
+                {
+                    var sendData = [{"searchByCountry":searchVal}];
+                    console.log(JSON.stringify(sendData));
+                    $.ajax({
+                        method:'POST',
+                        url:'/get-search',
+                        data:JSON.stringify(sendData),
+                        contentType: "application/json",
+                        dataType: 'json',
+                        success: (result)=>{
+                            console.log('----All Details----')
+                            if(result.response === undefined)
+                            {
+                                for(var i = 0; i < result.length; i++)
+                                {
+                                    console.log('-------- ' + i + ' --------')
+                                    console.log(result[i].name);
+                                    console.log(result[i].country);
+                                    console.log(result[i].gen);
+                                    console.log(result[i].photo);
+                                    console.log(result[i].url);
+                                    
+                                    document.getElementById('new-search-container').style.display = 'block';
+                                    document.getElementById('new-search-container').innerHTML += `<div class="w3-container w3-metro-dark-blue w3-padding w3-margin-bottom search-res-tab">
+                                                                                                <img src="/Matrimonial/matrimonial_profile_photo/${result[i].photo}" title="${result[i].name}" class="search-photo"/><span style="font-size:20px;"> ${result[i].name}</span>
+                                                                                                <div style="font-size:13px;">From ${result[i].country}</div>
+                                                                                                <div style="font-size:13px;">${result[i].gen}</div>
+                                                                                                <div style="font-size:11px; margin-top:15px; color:#ffff00">Sent Request <i class="fa fa-plus" style="color:#ffff00"></i></div>
+                                                                                                <div class="w3-right"><span style="font-size:13px;">Visit profile to send request </span><a href="/${result[i].url}"><button class="w3-button w3-green w3-hover-yellow"><i class="fa fa-eye"></i></button></a></div>
+                                                                                              </div>`;
+                                    document.getElementById("search-container").style.display = 'none';
+                                    document.getElementById('no-search-container').style.display = 'none';
+                                }
+                            }
+                            else
+                            {
+                                document.getElementById('no-search-container').style.display = 'block';
+                                document.getElementById('no-search-container').innerHTML = `<div class="w3-container w3-flat-pomegranate w3-padding w3-margin-bottom search-res-tab">
+                                                                                            <h3 class="w3-center">${result.response}</h3>
+                                                                                          </div>`;  
+                                document.getElementById("search-container").style.display = 'none';
+                                document.getElementById("new-search-container").style.display = 'none';
+
+                                console.log(result.response);
+                            }
+                            console.log(result);
+                        }
+                    });
+                    // console.log('Search Success!');
+
+                    return true;
+                }
+            });
+
+            document.getElementById('search-submit-btn').addEventListener('click', ()=>{
+                var searchVal = document.getElementById('search-manual').value;
+                if(searchVal == '')
+                {
+                    console.log('Please enter your search.');
+                    return false;
+                }
+                else
+                {
+                    var sendData = [{"searchByName":searchVal}];
+                    console.log(JSON.stringify(sendData));
+                    $.ajax({
+                        method:'POST',
+                        url:'/tab-search',
+                        data:JSON.stringify(sendData),
+                        contentType: "application/json",
+                        dataType: 'json',
+                        success: (result)=>{
+                            console.log('----All Details----')
+                            if(result.response === undefined)
+                            {
+                                for(var i = 0; i < result.length; i++)
+                                {
+                                    console.log('-------- ' + i + ' --------')
+                                    console.log(result[i].name);
+                                    console.log(result[i].country);
+                                    console.log(result[i].gen);
+                                    console.log(result[i].photo);
+                                    console.log(result[i].url);
+                                    
+                                    document.getElementById('tab-search-container').style.display = 'block';
+                                    document.getElementById('tab-search-container').innerHTML += `<div class="w3-container w3-metro-dark-blue w3-padding w3-margin-bottom search-res-tab">
+                                                                                                <img src="/Matrimonial/matrimonial_profile_photo/${result[i].photo}" title="${result[i].name}" class="search-photo"/><span style="font-size:20px;"> ${result[i].name}</span>
+                                                                                                <div style="font-size:13px;">From ${result[i].country}</div>
+                                                                                                <div style="font-size:13px;">${result[i].gen}</div>
+                                                                                                <div style="font-size:11px; margin-top:15px; color:#ffff00">Sent Request <i class="fa fa-plus" style="color:#ffff00"></i></div>
+                                                                                                <div class="w3-right"><span style="font-size:13px;">Visit profile to send request </span><a href="/${result[i].url}"><button class="w3-button w3-green w3-hover-yellow"><i class="fa fa-eye"></i></button></a></div>
+                                                                                              </div>`;
+                                    document.getElementById("search-container").style.display = 'none';
+                                    document.getElementById('no-search-container').style.display = 'none';
+                                    document.getElementById("new-search-container").style.display = 'none';
+                                }
+                            }
+                            else
+                            {
+                                document.getElementById('no-search-container').style.display = 'block';
+                                document.getElementById('no-search-container').innerHTML = `<div class="w3-container w3-flat-pomegranate w3-padding w3-margin-bottom search-res-tab">
+                                                                                            <h3 class="w3-center">${result.response}</h3>
+                                                                                          </div>`;  
+                                document.getElementById("search-container").style.display = 'none';
+                                document.getElementById("new-search-container").style.display = 'none';
+                                document.getElementById('tab-search-container').style.display = 'none';
+
+                                console.log(result.response);
+                            }
+                            console.log(result);
+                        }
+                    });
+                    // console.log('Search Success!');
+                    document.getElementById('search-manual').value = '';
+
+                    return true;
+                }
+            });
+        </script>
+    </body>
+</html>    

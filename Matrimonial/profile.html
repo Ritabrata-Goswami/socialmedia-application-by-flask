@@ -1,0 +1,1259 @@
+<html>
+    <head>
+        <title>Matrimonial</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Matrimonial Webpage">
+        <meta name="keywords" content="Profile, Find partner">
+        <meta name = 'robots' content = 'index, follow'>
+        <meta property = 'og:title' content = 'Matrimony'/>
+        <meta property = 'og:description' content = "This is Matrimonial web application. Where people come to find their life partner. Matrimonial also provide best service with free of cost."/>
+        <meta property = 'og:image' content = '-----'/>
+        <meta property = 'og:url' content = '-----'/>  
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-flat.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-metro.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+        <style type="text/css">
+            html {
+                scroll-behavior:smooth;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            .bar{
+                background-image: linear-gradient(to right, red, blue);
+                position: sticky;
+                top: 0;
+                z-index:2;
+            }
+            .left-container{flex:30%;}
+            .middle-container{
+                flex:50%;
+                margin-top: 3px;
+            }
+            #get-updated-profile-photo{display:none;}
+            .status{
+                box-shadow: 0px 3px 5px #777777;
+                border-radius: 3px;
+            }
+            .right-container{
+                flex:20%;
+                margin-top: 3px;
+            }
+            .messages{
+                box-shadow: 0px 3px 5px #777777;
+                border-radius: 3px;
+            }
+            .profile-details{
+                /* width:400px; */
+                box-shadow: 0px 3px 5px #777777;
+                border-radius: 3px;
+                margin-top: 5px;
+                margin-left: 5px;
+            }
+            .profile-photo-details{
+                /* width:400px; */
+                margin-top: 10px;
+                margin-left: 5px;
+                cursor:pointer;
+            }
+            .image-bar{
+                box-shadow: 0px 3px 5px #777777;
+                border-radius: 3px;
+                font-size: 17px;
+            }
+            .photo-container{
+                margin-top: 5px;
+                margin-left: 5px;
+                /* margin-bottom: 10px; */
+                /* width:400px; */
+            }
+            .column {
+                /* flex: 25%; */
+                float: left;
+                width: 50%;
+                padding: 1px 3px;
+            }
+            .img-class {
+                width: 100%;
+                opacity: 0.8; 
+                cursor: pointer; 
+            }
+            .img-class:hover {opacity:1;}
+            .status-enter{height:100px;}
+            .status-display{
+                margin-top:7px;
+                box-shadow: 0px 3px 5px #777777;
+                border-radius:3px;
+            }
+            #sendId{display:none;}
+            .status-display-container{margin-top:15px;}
+            .msg-display{border-radius:3px;}
+            .user{margin-bottom:22px;}
+            /* .rply-btn{margin-bottom:20px;} */
+            .msg-photo{
+                width:25px; 
+                height:25px; 
+                border-radius:50%;
+            }
+            #click-profile-edit:hover{
+                background-color:#f2f2f2; 
+                border-radius:50%; 
+                padding:5px 7px;
+                transition: 0.2s;
+            }
+            .profile-modal-popup, .profile-photo-block, .profile-pic-container, .upload-container, #delete-container, #open-edit-tab{
+                display: none; 
+                position: fixed; 
+                z-index: 2; 
+                left: 0;
+                top: 0;
+                width: 100%; 
+                height: 100%; 
+                overflow: auto; 
+                background-color: rgba(0,0,0,0.7);
+                padding-top: 50px;
+            }
+            #profile-block, #upload-profile-photo-block{
+                width: 500px;
+                margin: auto;
+                border-radius: 5px;
+            }
+            .close{
+                font-size: 25px;
+                font-weight: bold;
+                float:right;
+            }
+            .close:hover{
+                cursor:pointer;
+                color: #f12718;
+            }
+            .success-close{
+                font-size: 30px;
+                font-weight: bold;
+                float:right;
+                color:#f1f1f1
+            }
+            .success-close:hover{
+                cursor:pointer;
+                color: #f12718;
+            }
+            #alt-details-block{display:none;}
+            #success-edit-block{display:none;}
+            #success-photo-edit-block{display:none;}
+            .opt {
+                padding: 10px;
+                background: #00cc44;
+                border-radius: 45px; 
+                width: 65px;
+                border: 5px solid #00cc44;
+                margin: auto;
+            }
+            .upload-logo {
+                padding: 13px 13.5px;
+                background: #000000;
+                border-radius: 50%; 
+                width: 40px;
+                height: 40px;
+        /* border: 5px solid #00cc44; */
+                margin: auto;
+            }
+            .fa-check{color: white;}
+
+                /* zoom-pic */
+            .profile-pic-content {
+                margin: auto;
+                display: block;
+                width: 80%;
+                max-width: 700px;
+            }
+            #caption {
+                margin: auto;
+                display: block;
+                width: 80%;
+                max-width: 700px;
+                text-align: center;
+                color: #ccc;
+                padding: 10px 0;
+                height: 150px;
+            }
+            .profile-pic-content, #caption {  
+                -webkit-animation-name: zoom;
+                -webkit-animation-duration: 0.6s;
+                animation-name: zoom;
+                animation-duration: 0.6s;
+            }
+
+            @-webkit-keyframes zoom {
+                from {-webkit-transform:scale(0)} 
+                to {-webkit-transform:scale(1)}
+            }
+
+            @keyframes zoom {
+                from {transform:scale(0)} 
+                to {transform:scale(1)}
+            }
+            .close-zoom-profile-pic {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            }
+            .close-zoom-profile-pic:hover, .close-zoom-profile-pic:focus {
+                color: #f13939;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            #emj-container, #emj-edit-container{
+                display:none;
+                width:130px;
+                padding:5px 3px;
+                background:#1a1a1a;
+                /* box-shadow: 0px 5px 3px #777777; */
+                position:absolute;
+                z-index:2;
+                border-radius:2px;
+            }
+                 /* photo/video upload container */
+            #upload-photo-btn{
+                font-size:12px; 
+                background:#928d8d; 
+                padding:5px 5px; 
+                cursor:pointer; 
+                border-radius:2px;
+                color:white;
+            }
+            #upload-video-btn{
+                font-size:12px; 
+                background:#928d8d; 
+                padding:5px 5px; 
+                cursor:pointer; 
+                border-radius:2px;
+                color:white;
+            }
+            #upload-document-btn{
+                font-size:12px; 
+                background:#928d8d; 
+                padding:5px 5px; 
+                cursor:pointer; 
+                border-radius:2px;
+                color:white;
+            }
+            #upload-photo-btn:hover{
+                transition:0.3s;
+                background:#4d4747;
+            }
+            #upload-video-btn:hover{
+                transition:0.3s;
+                background:#4d4747;
+            }
+            #upload-document-btn:hover{
+                transition:0.3s;
+                background:#4d4747;
+            }
+            #upload-content{
+                width: 500px;
+                margin: auto;
+                border-radius: 5px;
+                background:#494545;
+            }
+            .delete-content{
+                width: 500px;
+                margin: auto;
+                border-radius: 5px;
+            }
+            .yes{
+                background:#1f6e1f;
+                padding:5px 35px;
+                cursor:pointer;
+                border-radius: 2px;
+            }
+            .yes:hover{
+                background:#58da58;
+                color:#000000;
+            }
+            .no{
+                background:#a31b1b;
+                padding:5px 35px;
+                cursor:pointer;
+                border-radius: 2px;
+            }
+            .no:hover{
+                background:#ec0e0e;
+                color:#000000;
+            }
+            .upload-success-close{
+                font-size: 25px;
+                font-weight: bold;
+                float:right;
+                color:#f1f1f1
+            }
+            .upload-success-close:hover{
+                cursor:pointer;
+                color: #f12718;
+                transition: 0.3s;
+            }
+            #show-fetched-items{display:none;}
+            .edit-btn{
+                font-size:12px; 
+                background:#928d8d; 
+                padding:5px 5px; 
+                cursor:pointer; 
+                border-radius:2px;
+                color:white;
+            }
+            .edit-btn:hover{
+                transition:0.3s;
+                background:#4d4747;
+            }
+            .delete-btn{
+                font-size:12px; 
+                background:#928d8d; 
+                padding:5px 5px; 
+                cursor:pointer; 
+                border-radius:2px;
+                color:white;
+            }
+            .delete-btn:hover{
+                transition:0.3s;
+                background:#4d4747;
+            }
+            #edit-container{
+                width: 700px;
+                margin: auto;
+                border-radius: 5px;
+            }
+            #cancel-btn{
+                padding:3px 5px;
+                background: #ff4444;
+                font-size: 11px;
+                cursor:pointer;
+                border-radius:2px;
+            }
+            #cancel-btn:hover{
+                background: #bd1010;
+                transition: 0.3s;
+            }
+            #clear-btn{
+                margin-left:5px;
+                padding:3px 5px;
+                background: #0973ec;
+                font-size: 11px;
+                cursor:pointer;
+                border-radius:2px;
+            }
+            #clear-btn:hover{
+                background: #1038bd;
+                transition: 0.3s;
+            }
+            #reset-btn{
+                margin-left:5px;
+                padding:3px 5px;
+                background: #0973ec;
+                font-size: 11px;
+                cursor:pointer;
+                border-radius:2px;
+            }
+            #reset-btn:hover{
+                background: #1038bd;
+                transition: 0.3s;
+            }
+            #save-status{
+                color:white;
+                background:#2875e9;
+                width:100%;
+                margin-top:20px;
+                cursor:pointer;
+                border-radius:2px;
+                font-size:17px;
+                border:none;
+                padding:7px 0px;
+            }
+            #save-status:hover{
+                transition:0.3s;
+                background:#125dff;
+            }
+            /* .number-of-react{display:none;} */
+            .settings{
+                margin-left: 2px;
+                margin-top: 30px;
+            }
+            .settings:hover{
+                box-shadow: 0px 3px 4px #777777;
+                transition: 0.8s;
+            }
+            .to-top {
+                display: none; 
+                position: fixed;
+                z-index: 5;
+                transition: 1s;
+                top: 80%;
+                right: 3%;
+            }
+        </style>
+    </head>
+    <body> 
+        <!-- <button class="w3-button w3-white w3-hover-black w3-margin-left"><i class="fa fa-power-off" style="color:red"></i></button> -->
+        <div class="w3-container bar">
+            <div class="w3-right">
+                <a href="/{{send_session_url}}/search"><i class="fa fa-group" style="font-size:24px; color:white; margin-right:35px;" title="search partner"></i></a>
+                <a href="/{{send_session_url}}"><i class="fa fa-user-circle-o" style="font-size:24px; color:white; margin-top:5px; margin-bottom:5px; margin-right:5px;" title="your profile"></i></a>
+                <a href="/logout"><i class="fa fa-power-off" style="color:red; font-size:20px; margin-left:25px;" title="logout"></i></a>
+            </div>
+        </div>
+        <div style="display:flex;">
+            <div class="left-container">
+                <div class="w3-padding-small profile-details" style="display:flex;">
+                    <!-- <h2>Welcome To Profile</h2> -->
+                    <div style="flex:95%;">
+                        <img id="display-profile-photo" class="w3-margin-top" src="/Matrimonial/photo/matrimonial_profile_photo/{{row_val.photo}}" title="{{row_val.name}}" style="width:100px; height:100px; cursor:pointer;" onerror="this.onerror=null; this.src='/Matrimonial/photo/web_photo/585e4beacb11b227491c3399.png'"/>
+                        <div id="get-updated-profile-photo"></div>
+                        <div>
+                            <i class="fa fa-camera" style="margin-left:105px; cursor:pointer; color:#a7a0a0;" id="upload-profile-img" title="change photo"></i>
+                        </div>
+                        <p style="font-size:22px;">{{row_val.name}}</p>
+                        <p style="font-size:12px;">You have request of <span>6</span> people. <a href="#" style="text-decoration: none; color:blue">See them</a></p>
+                        <div id="actual-details-block"> 
+                            <p style="font-size:12px;"><b>Gender: </b>{{row_val.gender}}</p>
+                            <p style="font-size:12px;"><b>Date of Birth: </b>{{row_val.dob}}</p>
+                            <p style="font-size:12px;"><b>Address: </b>{{row_val.address}}</p>
+                            <p style="font-size:12px;"><b>Country: </b>{{row_val.country}}</p>
+                            <p style="font-size:12px;"><b>Phone: </b>{{row_val.phone}}</p>
+                            <p style="font-size:12px;"><b>Email: </b>{{row_val.email}}</p>
+                        </div>
+                        <div id="alt-details-block"></div>
+                    </div>
+                    <div style="flex:5%;">
+                        <i class="fa fa-pencil" id="click-profile-edit" style="font-size:20px; margin-top:10px; cursor:pointer;" title="edit profile details"></i>
+                    </div>
+                </div>
+                <div class="profile-photo-details">
+                    <a href="/{{row_val.profile_url}}/photo" style="text-decoration:none;"><div class="w3-bar w3-metro-magenta w3-center w3-padding image-bar">Click to See All Photos</div></a>
+                </div>
+                <div class="photo-container" id="photo-container">
+                    {% if(display_profile_photos | length > 0) %}
+                    {% for display_photos in display_profile_photos %}
+                        {% if(display_photos.file_name != 'NULL') %}
+                            
+                            <div class="column">
+                                <img src="/Matrimonial/photo/serve_photos/{{display_photos.file_name}}" title="photo of {{display_photos.user_name}}" class="img-class"/>
+                            </div>
+
+                        {% endif %}
+                    {% endfor %}
+                    {% if(display_profile_photos[0].file_name == 'NULL') %}
+
+                        <div class="photo-col-null">
+                            <div class="w3-bar w3-padding w3-center" style="color:#d9d9d9; background:#8c8c8c; box-shadow:0px 3px 3px #777777; border-radius:2px;">No Photo or Video Available!</div>
+                        </div>
+
+                    {% endif %}
+                    {% else %}
+
+                    <div class="no-photo-col">
+                        <div class="w3-bar w3-padding w3-center" style="color:#d9d9d9; background:#8c8c8c; box-shadow:0px 3px 3px #777777; border-radius:2px;">No Photo or Video Available!</div>
+                    </div>
+
+                    {% endif %}
+                </div>
+
+                <div>
+                    <a href="/{{send_session_url}}/settings"><div class="w3-bar w3-padding w3-center w3-black settings"><i class="fa fa-gear fa-spin" style="font-size:24px"></i> Account Settings</div></a>
+                </div>
+            </div>  <!--Left container-->
+            <div class="middle-container w3-padding-small">
+                <div class="w3-bar w3-black w3-center w3-padding status">Write Your Status Below</div>
+                <div class="w3-margin-top">
+                    <textarea class="status-enter w3-input w3-padding" placeholder="Write a status..." v-model="newItem" id="get-status" @keyup.enter="addItem()" style="font-size:13px;"></textarea>
+                    <div class="w3-right">
+
+                        <div id="emj-container">
+                            <div id="cut-emoji" class="w3-right w3-text-white" style="cursor:pointer;">&times;</div>
+                            <div style="margin-top:23px;">
+                                <span id="emoji_1" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(1)">&#128515;</span>
+                                <span id="emoji_2" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(2)">&#128518;</span>
+                                <span id="emoji_3" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(3)">&#128521;</span>
+                                <span id="emoji_4" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(4)">&#128522;</span>
+                                <span id="emoji_5" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(5)">&#128525;</span>
+                                <span id="emoji_6" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(6)">&#128526;</span>
+                                <span id="emoji_7" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(7)">&#128529;</span>
+                                <span id="emoji_8" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(8)">&#128552;</span>
+                                <span id="emoji_9" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(9)">&#128532;</span>
+                                <span id="emoji_10" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(10)">&#128546;</span>
+                                <span id="emoji_11" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(11)">&#128557;</span>
+                                <span id="emoji_12" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(12)">&#128152;</span>
+                                <span id="emoji_13" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(13)">&#128150;</span>
+                                <span id="emoji_14" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(14)">&#128145;</span>
+                                <span id="emoji_15" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(15)">&#128146;</span>
+                                <span id="emoji_16" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickReact(16)">&#128141;</span>
+                            </div>
+                        </div>
+
+                        <i id="react" class='fa fa-smile-o w3-margin-right' style='cursor:pointer; font-size:20px;'></i>
+                        <i id="upload-file" class="fa fa-file-text-o w3-margin-right" style="cursor:pointer; font-size:20px;"></i>
+                        <i id="upload-photo" class="fa fa-camera w3-margin-right" style="cursor:pointer; font-size:20px;"></i>
+                        <button class="w3-button w3-blue w3-hover-black w3-margin-top w3-margin-bottom" id="submit">Post</button>
+                    </div>
+                </div>
+                <div class="status-display-container">
+                    <div id="show-fetched-items" style="margin-top:70px;"></div>
+        
+                    <div style="margin-top:70px;">
+
+                    {% if(all_photos | length > 0) %}
+                        {% for photos in all_photos %}
+                            {% if (photos.file_name == 'NULL') %}
+
+                                <div class="w3-padding w3-margin-top w3-container w3-flat-wet-asphalt status-display">
+                                    <span class="content-option-btn edit-btn" id="edit-btn" onclick="openEdit({{photos.id}});">Edit</span>
+                                    <span class="content-option-btn delete-btn" id="delete-btn" onclick="deletePhoto({{photos.id}});">Delete</span>
+                                    <p style="font-size:11px;">uploaded on {{photos.uploading_time.split()[0]}} at - {{photos.uploading_time.split()[1].split(':')[0]}}:{{photos.uploading_time.split()[1].split(':')[1]}}</p>
+                                    <p style="font-size:13px;">{{photos.file_description}}</p>
+                                </div>
+
+                            {% else %}
+
+                                <div class="w3-padding w3-margin-top w3-container w3-flat-wet-asphalt status-display">
+                                    <span class="content-option-btn edit-btn" id="edit-btn" onclick="openEdit({{photos.id}});">Edit</span>
+                                    <span class="content-option-btn delete-btn" id="delete-btn" onclick="deletePhoto({{photos.id}});">Delete</span>
+                                    <p style="font-size:11px;">uploaded on {{photos.uploading_time.split()[0]}} at - {{photos.uploading_time.split()[1].split(':')[0]}}:{{photos.uploading_time.split()[1].split(':')[1]}}</p>
+                                    <p style="font-size:13px;">{{photos.file_description}}</p>
+                                    <div class="w3-margin-top">
+                                        <img src="/Matrimonial/photo/serve_photos/{{photos.file_name}}" alt="Photos of {{photos.user_name}}" style="width:250px; height:250px; border-radius:2px;">
+                                    </div>
+                                </div>
+
+                            {% endif %}
+
+                            <div id="react-container_{{photos.id}}">
+                                <i class="fa fa-heart" style="font-size:15px; margin-top:10px; cursor:pointer;" id="send-react_{{photos.id}}" onclick="sendReaction({{photos.id}})"></i>
+                                {% for react_by_info in get_react_by_info %}
+                                    {% if(session_user_id == react_by_info.react_by_id and react_by_info.file_id == photos.id and react_by_info.reaction == 1) %}
+
+                                        <style type="text/css">#send-react_{{photos.id}} {display:none;}</style>
+                                        <i class="fa fa-heart" style="font-size:15px; margin-top:10px; cursor:pointer; color:#ff4444;" id="send-update-dislike-react_{{photos.id}}" onclick="sendUpdateReactionDisLike({{photos.id}})"></i><span id="number-of-react_{{photos.id}}" class="number-of-react"></span>
+
+                                    {% elif(session_user_id == react_by_info.react_by_id and react_by_info.file_id == photos.id and react_by_info.reaction == 0) %}
+                                        
+                                        <style type="text/css">#send-react_{{photos.id}} {display:none;}</style>
+                                        <i class="fa fa-heart" style="font-size:15px; margin-top:10px; cursor:pointer;" id="send-update-like-react_{{photos.id}}" onclick="sendUpdateReactionLike({{photos.id}})"></i><span id="number-of-react_{{photos.id}}" class="number-of-react"></span>
+
+                                    {% endif %}
+                                {% endfor %}
+                                {% for likes in total_like %}
+                                    {% if (likes[0] == photos.id) %}
+
+                                    <span id="show-num-react_{{photos.id}}"> {{likes[1]}}</span>
+
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+
+                        {% endfor %}
+                        {% else %}
+
+                        <div class="w3-bar w3-flat-concrete w3-center w3-padding status-display" id="no-status">No status Available.</div>
+
+                    {% endif %}
+
+                    </div>
+                </div>
+            </div>
+            <div class="right-container w3-padding-small">
+                <div class="w3-bar w3-blue w3-center w3-padding messages">See Messages</div>
+                <hr style='width:100%; height:1px; background-color:black;'/>
+                <div class="w3-margin-top user">
+                    <img src="/Matrimonial/photo/serve_photos/anime1.jpg" title="anime" class="msg-photo"/><a href="#" style="text-decoration: none;"><span style="color:blue"> User1</span></a> 
+                    <p class="w3-metro-dark-red w3-padding msg-display" style="font-size:13px;">This is the first message sent by user1. And she expressed about her interest on you.</p>
+                    <i class="fa fa-comment w3-right" style="font-size:18px; cursor:pointer;"></i>
+                </div>
+                <div class="w3-margin-top user">
+                    <img src="/Matrimonial/photo/serve_photos/anime1.jpg" title="anime" class="msg-photo"/><a href="#" style="text-decoration: none;"><span style="color:blue"> User2</span></a>
+                    <p class="w3-metro-dark-red w3-padding msg-display" style="font-size:13px;">This is the first message sent by user2. And she expressed about her interest on you.</p>
+                    <i class="fa fa-comment w3-right" style="font-size:18px; cursor:pointer;"></i>
+                </div>
+                <div class="w3-margin-top user">
+                    <img src="/Matrimonial/photo/serve_photos/anime1.jpg" title="anime" class="msg-photo"/><a href="#" style="text-decoration: none;"><span style="color:blue"> User3</span></a>
+                    <p class="w3-metro-dark-red w3-padding msg-display" style="font-size:13px;">This is the first message sent by user3. And she expressed about her interest on you.</p>
+                    <i class="fa fa-comment w3-right" style="font-size:18px; cursor:pointer;"></i>
+                </div>
+            </div>
+        </div>     <!--Flex container end-->
+
+        <button class = 'w3-button w3-btn w3-green w3-hover-blue to-top' id = 'top' onclick="topFunction()"><i class = 'fa fa-arrow-up'></i> Top</button>
+
+        <!-- onclick="document.getElementById('id01-popup').style.display='none'" -->
+        <div id="id01-popup" class="profile-modal-popup">
+            <div class="w3-container w3-flat-midnight-blue w3-padding" id="profile-block">
+                <span class="close" title="Close Modal" id="close-btn">&times;</span>
+                <h3 class="w3-center">Edit Your Profile</h3>
+                <div>
+                    <label for="edit-email">Email:</label>
+                    <input type="text" id="edit-email" class="w3-input" placeholder="enter new email" value="{{get_all_edits.email}}" style="font-size:14px;"/>
+                </div>
+                <div class="w3-margin-top">
+                    <label for="edit-phone">Phone:</label>
+                    <input type="text" id="edit-phone" class="w3-input" placeholder="enter new ph no" value="{{get_all_edits.phone}}" style="font-size:14px;"/>
+                </div>
+                <div class="w3-margin-top">
+                    <label for="edit-address">Address:</label>
+                    <textarea id="edit-address" class="w3-input" style="height:75px; font-size:14px;">{{get_all_edits.address}}</textarea>
+                </div>
+                <div class="w3-margin-top">
+                    <label for="edit-country">Country:</label>
+                    <select name="country" id="edit-country">
+                        {% if (get_all_edits.country == 'india') %}
+                        <option value="india" selected>India</option>
+                        {% else %}
+                        <option value="india">India</option>
+                        {% endif %}
+
+                        {% if (get_all_edits.country == 'US') %}
+                        <option value="US" selected>USA</option>
+                        {% else %}
+                        <option value="US">USA</option>
+                        {% endif %}
+
+                        {% if (get_all_edits.country == 'UK') %}
+                        <option value="UK" selected>UK</option>
+                        {% else %}
+                        <option value="UK">UK</option>
+                        {% endif %}
+
+                        {% if (get_all_edits.country == 'France') %}
+                        <option value="France" selected>France</option>
+                        {% else %}
+                        <option value="France">France</option>
+                        {% endif %}
+                    </select>
+                </div>
+                
+                <div class="w3-center">
+                    <button id="final-submission" class="w3-button w3-green w3-hover-blue w3-margin-top">Save</button>
+                </div>
+            </div>
+        </div>
+        <div class="profile-modal-popup" id="success-edit-block">
+            <span class="success-close w3-margin-right" title="Close Modal" id="close-success-btn">&times;</span>
+            <div class="w3-container w3-flat-midnight-blue w3-padding" id="edit-element">
+            </div>
+        </div>
+
+        <div class="profile-modal-popup" id="success-photo-edit-block">
+            <span class="success-close w3-margin-right" title="Close Modal" id="close-photo-success-btn">&times;</span>
+            <div class="w3-container w3-flat-midnight-blue w3-padding" id="edit-photo-element">
+            </div>
+        </div>
+
+        <div id="profile-photo-upload-block" class="profile-photo-block">
+            <div class = 'w3-container w3-padding w3-flat-wet-asphalt' id = 'upload-profile-photo-block'>
+              <div class = "close-model" style = 'font-size: 30px; font-weight: bold; float: right; cursor:pointer;' id="cut-profile-photo-uploader" onclick = "document.getElementById('profile-photo-upload-block').style.display = 'none';" onmouseover = "document.getElementsByClassName('close-model')[0].style.color = 'red';" onmouseout = "document.getElementsByClassName('close-model')[0].style.color = 'white';">&times;</div>
+              <div class = ' w3-padding'>
+                <h3 class = 'w3-center w3-margin-top'>Upload Your Profile Photo</h3>
+                <div class="w3-center w3-margin-top">
+                    <img id="output" src="/Matrimonial/photo/web_photo/upload-user-icon.jpg" style="width:150px; height:150px;"/>	
+                </div>
+                <div class = 'upload-logo w3-margin-top'>
+                  <label for="upload-profile-photo" class = ''>
+                    <i class = 'fa fa-upload' id="main-upload-icon"></i>
+                    <input type = 'file' id = 'upload-profile-photo' style = 'display:none;' onchange="loadFile(event)"/>
+                  </label>
+                </div>
+                <!-- <input type="text" id="headings" name="enter_head" placeholder="Enter heading of this video" class="w3-input w3-margin-top"/> -->
+                <button id = 'profile-photo-upload-submit' class = 'w3-button w3-btn w3-green w3-hover-black' style = 'margin-left: 180px; margin-top: 50px;'>Upload</button>
+              </div>
+            </div>
+        </div>
+
+        <div id="profile-pic-container" class="profile-pic-container">
+            <span class="close-zoom-profile-pic" id="close-zoom-profile-pic">&times;</span>
+            <img class="profile-pic-content" id="profile-img01">
+            <div id="caption"></div>
+        </div>
+
+
+        <div id="upload-container" class="w3-margin-top upload-container">
+            <div class="w3-container w3-padding" id="upload-content">
+                <span class="upload-success-close w3-margin-right" title="Close" id="close-photo-upload-success-btn">&times;</span>
+                <h5 style="color:white;">Upload photo/Video or Document</h5>
+                <div>
+                    <span class="upload-option-btn" id="upload-photo-btn" onclick="this.style.background='yellow'";>photo</span>
+                    <span class="upload-option-btn" id="upload-video-btn" onclick="this.style.background='yellow'";>video</span>
+                    <span class="upload-option-btn" id="upload-document-btn" onclick="this.style.background='yellow'";>document</span>
+                </div>
+                <div class = 'upload-logo w3-margin-top'>
+                    <label for="upload-files" class = ''>
+                        <i class="fa fa-upload w3-text-white" id="main-upload-icon"></i>
+                        <input type = 'file' id = 'upload-files' style = 'display:none;' onchange="loadStatusFile(event)"/>
+                    </label>
+                </div>
+                <div class="w3-center w3-margin-top" id="icon-demo-container">
+                    <img id="status-output" src="/Matrimonial/photo/web_photo/upload-user-icon.jpg" style="width:100px; height:100px;"/>	
+                </div>
+                <button id = 'profile-status-upload-submit' class = 'w3-button w3-btn w3-green w3-hover-black' style = 'margin-left: 192px; margin-top: 50px;'>Upload</button>
+            </div>
+        </div>
+        <input type="number" id="sendId"/>
+
+        <div id="delete-container">
+            <div class="w3-container w3-flat-midnight-blue w3-margin-top w3-padding delete-content">
+                <h4 class="w3-center">Confirm Delete?</h4>
+                <div class="w3-center" style="margin-top:35px;">
+                    <span class="yes" id="yes">YES</span>
+                    <span class="no" id="no">NO</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="open-edit-tab">
+            <div id='edit-container' class='w3-padding w3-margin-top w3-container w3-flat-wet-asphalt' style="margin-bottom:150px;">
+                <span id="cancel-btn">cancel</span>
+                <span id="clear-btn">clear all</span>
+                <span id="reset-btn">reset</span>
+                <div style="font-size:10px; margin-top:10px;" id="show-edit-time"></div>
+                <form id="txt-container">
+                    <input type="number" id="enter_id" style="display:none;"/>
+                    <textarea placeholder="Enter status here..." style="font-size:13px; height:87px;" class="w3-input w3-border w3-margin-top" id="edit-txt-tab"></textarea>
+                </form>
+                <i id="react-edit" class='fa fa-smile-o w3-margin-right' style='cursor:pointer; font-size:20px;'></i>
+
+                <div id="emj-edit-container">
+                    <div id="cut-edit-emoji" class="w3-right w3-text-white" style="cursor:pointer;">&times;</div>
+                    <div style="margin-top:23px;">
+                        <span id="emoji_1" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(1)">&#128515;</span>
+                        <span id="emoji_2" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(2)">&#128518;</span>
+                        <span id="emoji_3" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(3)">&#128521;</span>
+                        <span id="emoji_4" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(4)">&#128522;</span>
+                        <span id="emoji_5" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(5)">&#128525;</span>
+                        <span id="emoji_6" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(6)">&#128526;</span>
+                        <span id="emoji_7" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(7)">&#128529;</span>
+                        <span id="emoji_8" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(8)">&#128552;</span>
+                        <span id="emoji_9" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(9)">&#128532;</span>
+                        <span id="emoji_10" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(10)">&#128546;</span>
+                        <span id="emoji_11" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(11)">&#128557;</span>
+                        <span id="emoji_12" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(12)">&#128152;</span>
+                        <span id="emoji_13" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(13)">&#128150;</span>
+                        <span id="emoji_14" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(14)">&#128145;</span>
+                        <span id="emoji_15" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(15)">&#128146;</span>
+                        <span id="emoji_16" style="cursor:pointer; font-size:25px; padding:2px 1px;" onclick="clickEditReact(16)">&#128141;</span>
+                    </div>
+                </div>
+
+                <div id="img-edit-container"></div>
+                <button class="" id="save-status">save</button>
+            </div>
+        </div>
+
+        <script>
+            document.getElementById('clear-btn').addEventListener('click',()=>{
+                document.getElementById("edit-txt-tab").value = ' ';
+            });
+
+            document.getElementById('reset-btn').addEventListener('click',()=>{
+                document.getElementById("txt-container").reset();
+            });
+
+            var loadFile = function(event) {
+                var image = document.getElementById('output');
+                image.src = URL.createObjectURL(event.target.files[0]);
+            };
+
+            var loadStatusFile = function(event) {
+                var image = document.getElementById('status-output');
+                image.src = URL.createObjectURL(event.target.files[0]);
+            };
+
+            var clickReact = (getEmoji) => {document.getElementById('get-status').value += document.getElementById('emoji_'+`${getEmoji}`).innerHTML;}
+            var clickEditReact = (getEmojiId) => {document.getElementById('edit-txt-tab').value += document.getElementById('emoji_'+`${getEmojiId}`).innerHTML;}
+            document.getElementById('click-profile-edit').addEventListener('click', ()=>{document.getElementById('id01-popup').style.display = 'block';});
+            var getContainer = document.getElementById('id01-popup');
+            var successContainer = document.getElementById('success-edit-block');
+            var profilePhotoUploadContainer = document.getElementById('profile-photo-upload-block');
+            var profilePhotoSuccessContainer = document.getElementById('success-photo-edit-block');
+            var profilePhotoZoomContainer = document.getElementById("profile-pic-container");
+            var uploadPhotoVidDocContainer = document.getElementById('upload-container');
+            var editContainerTab = document.getElementById('open-edit-tab');
+
+            window.onclick = (event) =>{
+                if(event.target == getContainer)
+                {
+                    getContainer.style.display = 'none';
+                }
+                if(event.target == successContainer)
+                {
+                    successContainer.style.display = 'none';
+                }
+                if(event.target == profilePhotoUploadContainer)
+                {
+                    profilePhotoUploadContainer.style.display = 'none';
+                }
+                if(event.target == profilePhotoSuccessContainer)
+                {
+                    profilePhotoSuccessContainer.style.display = 'none';
+                }
+                if(event.target == profilePhotoZoomContainer)
+                {
+                    profilePhotoZoomContainer.style.display = 'none';
+                }
+                if(event.target == uploadPhotoVidDocContainer)
+                {
+                    uploadPhotoVidDocContainer.style.display = 'none';
+                }
+                if(event.target == editContainerTab)
+                {
+                    editContainerTab.style.display = 'none';
+                }
+            }
+
+            window.onscroll = () => {
+                if (document.body.scrollTop > 1300 || document.documentElement.scrollTop > 1300) {
+                    document.getElementById('top').style.display = "block";
+                } else {
+                    document.getElementById('top').style.display = "none";
+                }
+            }
+
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+
+            var image = document.getElementById("display-profile-photo");
+            var modalImg = document.getElementById("profile-img01");
+            var captionText = document.getElementById("caption");
+            image.onclick = function(){
+                profilePhotoZoomContainer.style.display = "block";
+                modalImg.src = this.src;
+                captionText.innerHTML = this.alt;
+            }
+
+            var sendReaction = (getReactionId) => {
+                var sendReaction = [{"reactionId":getReactionId}];
+                $.ajax({
+                    method:'POST',
+                    url:'/send-like',
+                    data:JSON.stringify(sendReaction),
+                    contentType:'application/json',
+                    dataType:'json',
+                    success:(result)=>{
+                        console.log(result);
+                        for(var i = 0; i < result.length; i++)
+                        {
+                            // document.getElementById(`number-of-react_`+getReactionId).style.display = 'block';
+                            // document.getElementById(`number-of-react_`+result[i].file_id).innerHTML = `${result[i].like}`;
+                            console.log(result[i].response);
+                            console.log(result[i].like);
+                            console.log(result[i].file_id);
+                            document.getElementById(`react-container_`+result[i].file_id).innerHTML = `<i class="fa fa-heart" style="font-size:15px; margin-top:10px; cursor:pointer; color:#ff4444;" id="send-react_${getReactionId}" onclick="sendUpdateReactionDisLike(${getReactionId})"></i><span style="margin-left:5px;">${result[i].like}</span>`;
+                        }
+                    }
+                });
+                // var likeVal = document.getElementById(`show-num-react_`+getReactionId).innerHTML;
+                // console.log('getting like val:- '+likeVal);
+                // document.getElementById(`number-of-react_`+getReactionId).style.display = 'block';
+                // document.getElementById(`show-num-react_`+getReactionId).style.display = 'none';
+                // document.getElementById(`number-of-react_`+getReactionId).innerHTML = likeVal + 1; 
+                // document.getElementById(`send-react_`+getReactionId).style.display = 'none';
+                // document.getElementById(`react-container_`+getReactionId).innerHTML = `<i class="fa fa-heart" style="font-size:15px; margin-top:10px; cursor:pointer; color:#ff4444;" id="send-update-react_${getReactionId}" onclick="sendUpdateReactionDisLike(${getReactionId})"></i>`;
+            }
+
+            var sendUpdateReactionDisLike = (getUpdateDislikeId) =>{
+                var sendReaction = [{"reactionId":getUpdateDislikeId}];
+                $.ajax({
+                    method:'POST',
+                    url:'/send-update-dislike',
+                    data:JSON.stringify(sendReaction),
+                    contentType:'application/json',
+                    dataType:'json',
+                    success:(result)=>{
+                        console.log(result);
+                        for(var i = 0; i < result.length; i++)
+                        {
+                            console.log(result[i].response);
+                            console.log(result[i].file_id);
+                            console.log(result[i].update_dislike);
+                            // document.getElementById(`number-of-react_`+result[i].file_id).style.display = 'block';
+                            // document.getElementById(`number-of-react_`+result[i].file_id).innerHTML = result[i].update_dislike;
+                            document.getElementById(`react-container_`+result[i].file_id).innerHTML = `<i class="fa fa-heart" style="font-size:15px; margin-top:10px; cursor:pointer;" id="send-update-dislike-react_${getUpdateDislikeId}" onclick="sendUpdateReactionLike(${getUpdateDislikeId})"></i><span style="margin-left:5px;">${result[i].update_dislike}</span>`;
+                        }
+                    }
+                });
+                // document.getElementById(`send-update-react_`+getUpdateDislikeId).style.display = 'none';
+                // document.getElementById(`send-update-like-react_`+getUpdateDislikeId).style.display = 'none';
+            }
+
+            var sendUpdateReactionLike = (getUpdateLikeId) => {
+                var sendReaction = [{"reactionId":getUpdateLikeId}];
+                $.ajax({
+                    method:'POST',
+                    url:'/send-update-like',
+                    data:JSON.stringify(sendReaction),
+                    contentType:'application/json',
+                    dataType:'json',
+                    success:(result)=>{
+                        console.log(result);
+                        for(var i = 0; i < result.length; i++)
+                        {
+                            console.log(result[i].response);
+                            console.log(result[i].file_id);
+                            console.log(result[i].update_like);
+                            // document.getElementById(`number-of-react_`+result[i].file_id).style.display = 'block';
+                            // document.getElementById(`number-of-react_`+result[i].file_id).innerHTML = 1;
+                            document.getElementById(`react-container_`+result[i].file_id).innerHTML = `<i class="fa fa-heart" style="font-size:15px; margin-top:10px; cursor:pointer; color:#ff4444;" id="send-update-like-react_${getUpdateLikeId}" onclick="sendUpdateReactionDisLike(${getUpdateLikeId})"></i><span style="margin-left:5px;">${result[i].update_like}</span>`;
+                        }
+                    }
+                });
+                // document.getElementById(`send-update-dislike-react_`+getUpdateLikeId).style.display = 'none';
+            }
+
+            document.getElementById('final-submission').addEventListener('click', ()=>{
+                var email = document.getElementById('edit-email').value;
+                var phone = document.getElementById('edit-phone').value;
+                var addre = document.getElementById('edit-address').value;
+                var cntry = document.getElementById('edit-country').value;
+
+                if(email == '' || phone == '' || addre == '' || cntry == '')
+                {
+                    console.log('Blank field is not allowed!');
+                    return false;
+                }
+                else
+                {
+                    var sendData = [{"sendEmail":email}, {"sendPhone":phone}, {"sendAddress":addre}, {"sendCountry":cntry}];
+                    $.ajax({
+                        method:"POST",
+                        url:'/update-profile',
+                        data:JSON.stringify(sendData),
+                        contentType:'application/json',
+                        dataType: 'json',
+                        success: (result)=>{
+                            for(var i = 0; i < result.length; i++)
+                            {
+                                console.log(result[i].response);
+
+                                document.getElementById("actual-details-block").style.display = 'none';
+                                document.getElementById("alt-details-block").style.display = 'block';
+                                document.getElementById("alt-details-block").innerHTML = `<p style="font-size:12px;"><b>Gender: </b>${result[i].gender}</p> <p style="font-size:12px;"><b>Date of Birth: </b>${result[i].dob}</p> <p style="font-size:12px;"><b>Address: </b>${result[i].addr}</p> <p style="font-size:12px;"><b>Country: </b>${result[i].country}</p> <p style="font-size:12px;"><b>Phone: </b>${result[i].ph}</p> <p style="font-size:12px;"><b>Email: </b>${result[i].email}</p>`;
+                                document.getElementById("id01-popup").style.display = 'none';
+                                document.getElementById("success-edit-block").style.display = 'block';
+                                document.getElementById("edit-element").style.width = '500px';
+                                document.getElementById("edit-element").style.margin = 'auto';
+                                document.getElementById("edit-element").style.borderRadius = '5px';
+                                document.getElementById("edit-element").innerHTML = `
+                                                                                           <div class = 'opt w3-margin-top'>
+                                                                                            <i class="fa fa-check" style="font-size:35px"></i>
+                                                                                           </div>
+                                                                                           <h3 class = 'w3-center w3-margin-top w3-text-flat-emerald'>${result[i].response}</h3>`;
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown)
+                        {
+                            if(jqXHR.status == 500)
+                            {
+                                document.write("<p style='text-align:center; color:red; font-size:17px;'>Internal Error Occurred.</p>");
+                                console.log('Internal Server Error.');
+                            }
+                            else
+                            {
+                                document.write("<p style='text-align:center; color:red; font-size:17px;'>" + jqXHR.responseText + "</p>");
+                                console.log('Error:- '+jqXHR.responseText);
+                            }
+                        }
+                    });
+                    return true;
+                }
+            });
+
+            document.getElementById('profile-photo-upload-submit').addEventListener('click', ()=>{
+                var uploadPhoto = document.getElementById('upload-profile-photo').files[0];
+
+                var formdata = new FormData();
+                formdata.append('upload-photo',uploadPhoto);
+
+                if(uploadPhoto === undefined)
+                {
+                    console.log('Photo Not Selected!');
+                    return false;
+                }
+                else
+                {
+                    $.ajax({
+                        method:'POST',
+                        url:'/profile-pic',
+                        data:formdata,
+                        contentType: false,
+                        processData: false,
+                        success: (updateResult)=>{
+                            console.log(updateResult);
+
+                            for(var i = 0; i < updateResult.length; i++)
+                            {
+                                console.log(updateResult[i].response);
+                                console.log(updateResult[i].profilePhoto);
+                                document.getElementById("display-profile-photo").style.display = 'none';
+                                document.getElementById("get-updated-profile-photo").style.display = 'block';
+                                document.getElementById("get-updated-profile-photo").innerHTML = `<img class="w3-margin-top" src="/Matrimonial/photo/matrimonial_profile_photo/${updateResult[i].profilePhoto}" title="{{row_val.name}}" style="width:100px; height:100px; cursor:pointer;"/>`;
+                                document.getElementById("success-photo-edit-block").style.display = 'block';
+                                document.getElementById("profile-photo-upload-block").style.display = 'none';
+                                document.getElementById("edit-photo-element").style.width = '500px';
+                                document.getElementById("edit-photo-element").style.margin = 'auto';
+                                document.getElementById("edit-photo-element").style.borderRadius = '5px';
+                                document.getElementById("edit-photo-element").innerHTML = `<div class = 'opt w3-margin-top'>
+                                                                                            <i class="fa fa-check" style="font-size:35px"></i>
+                                                                                           </div>
+                                                                                           <h3 class = 'w3-center w3-margin-top w3-text-flat-emerald'>${updateResult[i].response}</h3>`;
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown)
+                        {
+                            console.log('Error code:- '+jqXHR.status);
+                            console.log('Error:- '+jqXHR.responseText);
+                        }
+                    });
+                    return true;
+                }
+            });
+
+            document.getElementById('submit').addEventListener('click',()=>{
+                var getStatus = document.getElementById('get-status').value;
+                var getFile = document.getElementById('upload-files').files[0];
+                console.log(getStatus);
+
+                    if(getStatus == '')
+                    {
+                        console.log('No Status Given');
+                        return false;
+                    }
+                    else
+                    {
+                        var sendData = [{"desc":getStatus}];
+                        $.ajax({
+                            method:'POST',
+                            url:'/send-status',
+                            data:JSON.stringify(sendData),
+                            contentType:'application/json',
+                            dataType:'json',
+                            success:(result)=>{
+                                console.log(result);
+                                for(var i = 0; i < result.length; i++)
+                                {
+                                    console.log(result[i].description);
+                                    console.log(result[i].user_id);
+                                    document.getElementById('show-fetched-items').style.display = 'block';  
+                                    document.getElementById('show-fetched-items').innerHTML += `<div class="w3-padding w3-margin-top w3-container w3-flat-wet-asphalt status-display">
+                                                                                                    <span class="content-option-btn edit-btn" id="edit-btn" onclick="openEdit(${result[i].user_id});">Edit</span>
+                                                                                                    <span class="content-option-btn delete-btn" id="delete-btn" onclick="deletePhoto(${result[i].user_id});">Delete</span>
+                                                                                                    <p style="font-size:11px;">uploaded on ${result[i].upload_time.split(' ')[0]} at - ${result[i].upload_time.split(' ')[1].split(':')[0]}:${result[i].upload_time.split(' ')[1].split(':')[1]}</p>
+                                                                                                    <p style="font-size:13px;">${result[i].description}</p>
+                                                                                                    <div id="react-container_${result[i].user_id}"><i class="fa fa-heart" style="font-size:15px; margin-top:10px; cursor:pointer;" id="send-react_${result[i].user_id}" onclick="sendReaction(${result[i].user_id})"></i><span id="show-num-react"> </span></div>
+                                                                                                </div>`;
+                                    document.getElementById('no-status').style.display = 'none';
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown)
+                            {
+                                console.log('Error code:- '+jqXHR.status);
+                                console.log('Error:- '+jqXHR.responseText);
+                            }
+                        });
+                        document.getElementById('get-status').value = '';
+                        return true;
+                    }
+            });
+
+            document.getElementById('profile-status-upload-submit').addEventListener('click',()=>{
+                var getStatus = document.getElementById('get-status').value;
+                var getFile = document.getElementById('upload-files').files[0];
+                console.log(getStatus);
+
+                    if(getStatus == '' && getFile === undefined)
+                    {
+                        console.log('No Status Given!');
+                        return false;
+                    }
+                    else
+                    {
+                        formdata = new FormData();
+                        formdata.append('description',getStatus);
+                        formdata.append('file',getFile);
+
+                        $.ajax({
+                            method:'POST',
+                            url:'/send-file-status',
+                            data:formdata,
+                            contentType:false,
+                            processData:false,
+                            success:(result)=>{
+                                console.log(result);
+                                for(var i = 0; i < result.length; i++)
+                                {
+                                    console.log(result[i].description);
+                                    console.log(result[i].file_id);
+                                    console.log(result[i].photo_or_video);
+                                    document.getElementById('upload-container').style.display = 'none';
+                                    document.getElementById('show-fetched-items').style.display = 'block';
+                                    document.getElementById('show-fetched-items').innerHTML += `<div class="w3-padding w3-margin-top w3-container w3-flat-wet-asphalt status-display">
+                                                                                                    <span class="content-option-btn edit-btn" id="edit-btn" onclick="openEdit(${result[i].file_id});">Edit</span>
+                                                                                                    <span class="content-option-btn delete-btn" id="delete-btn" onclick="deletePhoto(${result[i].file_id});">Delete</span>
+                                                                                                    <p style="font-size:11px;">uploaded on ${result[i].upload_time.split(' ')[0]} at - ${result[i].upload_time.split(' ')[1].split(':')[0]}:${result[i].upload_time.split(' ')[1].split(':')[1]}</p>
+                                                                                                    <p style="font-size:13px;">${result[i].description}</p>
+                                                                                                    <div class="w3-margin-top">
+                                                                                                        <img src="/Matrimonial/photo/serve_photos/${result[i].photo_or_video}" alt="Photos of ${result[i].name}" style="width:250px; height:250px; border-radius:2px;">
+                                                                                                    </div>
+                                                                                                    <div id="react-container_${result[i].file_id}"><i class="fa fa-heart" style="font-size:15px; margin-top:10px; cursor:pointer;" id="send-react_${result[i].file_id}" onclick="sendReaction(${result[i].file_id})"></i><span id="show-num-react"> </span></div>
+                                                                                                </div>`; 
+                                    document.getElementById('no-status').style.display = 'none';
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown)
+                            {
+                                console.log('Error code:- '+jqXHR.status);
+                                console.log('Error:- '+jqXHR.responseText);
+                            }
+                        });
+                        document.getElementById('get-status').value = '';
+                        return true;
+                    }
+            });
+
+            var deletePhoto = (getId) => {
+                document.getElementById('delete-container').style.display = 'block';
+                document.getElementById('sendId').value = getId;
+            }
+            document.getElementById('yes').addEventListener('click',()=>{
+                var transferId = document.getElementById('sendId').value;
+                var sendDeleteId = [{"sendDeleteId":transferId}];
+                console.log(JSON.stringify(sendDeleteId));
+
+                $.ajax({
+                    method:'POST',
+                    url:'/delete-post',
+                    data:JSON.stringify(sendDeleteId),
+                    contentType:'application/json',
+                    dataType:'json',
+                    success:(result)=>{
+                        console.log(result);
+                        for(var i = 0; i < result.length; i++)
+                        {
+                            window.location.href = `/${result[i].user_account}`;
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.log('Error code:- '+jqXHR.status);
+                        console.log('Error:- '+errorThrown);
+                    }
+                });
+            });
+
+            var openEdit = (getId) =>{
+                var getEditId = getId;
+                var sendEditId = [{"sendEditId":getEditId}];
+
+                $.ajax({
+                    method:'POST',
+                    url:'/sent-edit-request',
+                    data:JSON.stringify(sendEditId),
+                    contentType:'application/json',
+                    dataType:'json',
+                    success:(result)=>{
+                        console.log(result);
+                        for(var i = 0; i < result.length; i++)
+                        {
+                            if(result[i].file_name == 'NULL')
+                            {
+                                document.getElementById('enter_id').value = `${result[i].file_id}`;
+                                document.getElementById('img-edit-container').style.display = 'none';
+                                document.getElementById('open-edit-tab').style.display = 'block';
+                                document.getElementById('edit-txt-tab').value = `${result[i].file_descr}`;
+                                document.getElementById('show-edit-time').innerHTML = `uploaded on ${result[i].time.split(' ')[0]} at - ${result[i].time.split(' ')[1].split(':')[0]}:${result[i].time.split(' ')[1].split(':')[1]}`;
+                            }
+                            else
+                            {
+                                document.getElementById('enter_id').value = `${result[i].file_id}`;
+                                document.getElementById('img-edit-container').style.display = 'block';
+                                document.getElementById('open-edit-tab').style.display = 'block';
+                                document.getElementById('edit-txt-tab').value = `${result[i].file_descr}`;
+                                document.getElementById('show-edit-time').innerHTML = `uploaded on ${result[i].time.split(' ')[0]} at - ${result[i].time.split(' ')[1].split(':')[0]}:${result[i].time.split(' ')[1].split(':')[1]}`;
+                                document.getElementById('img-edit-container').innerHTML = `<img src = '/Matrimonial/photo/serve_photos/${result[i].file_name}' style="width:100%; margin-top:20px;" onerror="this.onerror=null; this.style.display='none'" id="edit-tab-photo"/>`;
+                            }
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.log('Error code:- '+jqXHR.status);
+                        console.log('Error:- '+errorThrown);
+                    }
+                });
+            }
+
+            document.getElementById('save-status').addEventListener('click',()=>{
+                var sendEditVal = document.getElementById('edit-txt-tab').value;
+                var id = document.getElementById('enter_id').value
+                var sendData = JSON.stringify([{"file_id":id}, {"val":sendEditVal}]);
+                console.log(sendData);
+
+                $.ajax({
+                    method:'POST',
+                    url:'/save-edit',
+                    data:sendData,
+                    contentType:'application/json',
+                    dataType:'json',
+                    success:(result)=>{
+                        console.log(result);
+                        for(var i = 0; i < result.length; i++)
+                        {
+                            window.location.href = `/${result[i].user_url}`;
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        console.log('Error code:- '+jqXHR.status);
+                        console.log('Error:- '+errorThrown);
+                    }
+                });
+            });
+
+            // function reaction(getReactId)
+            // {}
+
+            $(document).ready(()=>{ 
+                $('#close-btn').click(()=>{$('#id01-popup').fadeOut(200);}); 
+                $('#edit-element').fadeIn(300); 
+                $('#close-success-btn').click(()=>{$('#success-edit-block').fadeOut(200);});
+                $('#upload-profile-img').click(() => {document.getElementById('profile-photo-upload-block').style.display = 'block';}); 
+                $('#cut-profile-photo-uploader').click(()=>{$('#profile-photo-upload-block').fadeOut(200);}); 
+                $('#close-photo-success-btn').click(()=>{$('#success-photo-edit-block').fadeOut(200);});
+                $('#close-zoom-profile-pic').click(()=>{$('#profile-pic-container').fadeOut(200);});
+                $('#react').click(()=>{$('#emj-container').fadeIn(200);});
+                $('#cut-emoji').click(()=>{$('#emj-container').fadeOut(200);});
+                $('#upload-video-btn').click(()=>{document.getElementById('icon-demo-container').style.display = 'none';});
+                $('#upload-document-btn').click(()=>{document.getElementById('icon-demo-container').style.display = 'none';});
+                $('#upload-photo-btn').click(()=>{document.getElementById('icon-demo-container').style.display = 'block';});
+                $('.upload-option-btn').on('click',function(){
+                    $('.upload-option-btn').css({'background':'', 'color':''}); 
+                    $(this).css({'background':'#1f1f1f', 'color':'#ffff99'});
+                });
+                $('#upload-file').click(()=>{$('#upload-container').fadeIn(200)});
+                $('#upload-photo').click(()=>{$('#upload-container').fadeIn(200)});
+                $('#close-photo-upload-success-btn').click(()=>{$('#upload-container').fadeOut(200)});
+                $('.content-option-btn').on('click',function(){
+                    $('.content-option-btn').css({'background':'', 'color':''}); 
+                    $(this).css({'background':'#1f1f1f', 'color':'#ffff99'});
+                });
+                $('#no').click(()=>{$('#delete-container').fadeOut(150);});
+                $('#cancel-btn').click(()=>{$('#open-edit-tab').fadeOut(250);});
+                $('#react-edit').click(()=>{$('#emj-edit-container').fadeIn(200);});
+                $('#cut-edit-emoji').click(()=>{$('#emj-edit-container').fadeOut(250);});
+            });
+        </script>
+    </body>
+</html>
+
